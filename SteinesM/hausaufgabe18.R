@@ -101,43 +101,47 @@ pyreg <- read.table("Data/pyreg.tab",header=TRUE)
 # Wie linreg hat pyreg drei Spalten x1, x2, y
 # Plotten Sie die Punkte + Regressionslinie für y ~ x1 (wie oben).
 
-# CODE_HIER
+ggplot(pyreg,aes(x=x1,y=y)) + geom_point() + geom_smooth(method="lm")
 
 # Und das gleiche für y ~ x2. 
 
-# CODE_HIER
+ggplot(pyreg,aes(x=x2,y=y)) + geom_point() + geom_smooth(method="lm")
 
 # Berechnen Sie die zwei Regressionsmodelle für y ~ x1 und y ~ x2
 
-# CODE_HIER
+summary(lm(y ~ x1, data=pyreg))
 
-# CODE_HIER
+summary(lm(y ~ x2, data=pyreg))
 
 # Bevor Sie die Regression y ~ x1 + x2 berechnen, schauen Sie sich die
 # Korrelation (mit Konfidenzintervall!) zwischen x1 und x2 an:
 
-# CODE_HIER
+cor.test(pyreg$x1, pyreg$x2, method="pearson")
 
 # Wenn Sie nicht miteinander signifikant korreliert sind, sollten Sie auch die
 # Regression y ~ x1 + x2 berechnen:
 
-# CODE_HIER
+summary(lm(y ~ x1 + x2, data=pyreg))
 
 # Wie gut passt das lineare Modell zu den Daten? Schauen Sie sich die R^2 und 
 # F-Werte an sowie auch die t-Werte für die einzelnen Prediktoren. Glauben Sie, 
 # dass y im linearen Verhältnis zu x1 und x2 steht? Machen Sie eine Grafik wie
 # oben für y ~ x1 + x2, **nachdem Sie sich eine Antwort überlegt haben**.
 
-# CODE_HIER
+ggplot(pyreg,aes(x=x1,y=x2)) + geom_point(aes(size=y))
 
 # Glauben Sie jetzt, dass y im linearen Verhältnis zu x1 und x2 steht? Warum (nicht)?
 
 # Wie sieht mit Korrelationen aus? Berechnen Sie die Korrelation (sowohl Pearson
 # als auch Spearman) zwischen (y und x1) sowie auch zwischen (y und x2). 
 
-# CODE_HIER
+cor.test(pyreg$x1, pyreg$y, method="pearson")
 
-# CODE_HIER 
+cor.test(pyreg$x1, pyreg$y, method="spearman")
+
+cor.test(pyreg$x2, pyreg$y, method="pearson")
+
+cor.test(pyreg$x2, pyreg$y, method="spearman")
 
 # Welche Art von Korrelation macht am meisten Sinn bei diesen Daten?
 
